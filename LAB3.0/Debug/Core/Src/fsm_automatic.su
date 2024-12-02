@@ -1,0 +1,4 @@
+fsm_automatic.c:14:6:updateBuffer	16	static
+fsm_automatic.c:20:6:updateCountdownAndResetTimer	8	static
+fsm_automatic.c:27:6:switchToManualMode	8	static
+fsm_automatic.c:33:6:fsm_automatic_run	8	static
