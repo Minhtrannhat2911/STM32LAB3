@@ -1,0 +1,3 @@
+../Core/Src/auto.c:23:12:isCmdEqual	1
+../Core/Src/auto.c:27:6:cmd_parser_fsm	12
+../Core/Src/auto.c:64:6:uart_comms_fsm	5
