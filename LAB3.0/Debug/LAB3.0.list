@@ -1717,7 +1717,7 @@ void fsm_setting_run() {
 
 08000ca8 <Green_Red>:
 int yellowTime = 2;
-int greenTime = 3;
+int greenTime = 5;
 
 
 

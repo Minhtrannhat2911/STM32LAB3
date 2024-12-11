@@ -8,7 +8,7 @@
 #include "main.h"
 int redTime = 5;
 int yellowTime = 2;
-int greenTime = 3;
+int greenTime = 5;
 
 
 
