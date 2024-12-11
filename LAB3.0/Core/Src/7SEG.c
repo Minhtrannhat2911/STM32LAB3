@@ -142,3 +142,11 @@ void BufferVertical(int value) {
 	led_buffer[2] = (value / 10) % 10;
 	led_buffer[3]= value % 10;
 }
+
+int idx = 0;
+void autoUpdate7Seg() {
+	update7SEG(idx++);
+	if (idx >= 4){
+		idx = 0;
+	}
+}

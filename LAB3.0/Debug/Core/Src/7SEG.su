@@ -5,3 +5,4 @@
 7SEG.c:104:6:update7SEG	16	static
 7SEG.c:137:6:BufferHorizontal	16	static
 7SEG.c:141:6:BufferVertical	16	static
+7SEG.c:147:6:autoUpdate7Seg	8	static

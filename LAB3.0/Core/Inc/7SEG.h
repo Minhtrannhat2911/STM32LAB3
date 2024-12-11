@@ -18,6 +18,6 @@ void update7SEG(int index);
 void updateClockBuffer(int hour, int minute);
 void BufferHorizontal(int value);
 void BufferVertical(int value);
-
+void autoUpdate7Seg();
 
 #endif /* INC_7SEG_H_ */

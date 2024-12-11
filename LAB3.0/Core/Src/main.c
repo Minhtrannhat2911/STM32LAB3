@@ -58,9 +58,6 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_TIM2_Init(void);
 /* USER CODE BEGIN PFP */
-void task_read_buttons(void);
-void task_run_fsm(void);
-void task_update_display(void);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -98,18 +95,21 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_TIM2_Init();
-  HAL_TIM_Base_Start_IT(&htim2);
-  /* USER CODE BEGIN 2 */
 
+  /* USER CODE BEGIN 2 */
+  HAL_TIM_Base_Start_IT(&htim2);
+//  SCH_Add_Task(timerRun, 		100, 1);
+  SCH_Add_Task(getKeyInput, 	100, 1);
+  SCH_Add_Task(autoUpdate7Seg, 	100, 5);
+  SCH_Add_Task(fsm_automatic_run, 	100, 1);
+  SCH_Add_Task(fsm_manual_run, 		100, 1);
+  SCH_Add_Task(fsm_setting_run, 	100, 1);
 
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  SCH_Init();
-  SCH_Add_Task(task_read_buttons, 0, 50000);        // Read buttons every 50ms
-  SCH_Add_Task(task_run_fsm, 0, 100000);            // Run FSM every 100ms
-  SCH_Add_Task(task_update_display, 0, 100000);     // Update 7-segment display every 100ms
+
   while (1)
   {
     /* USER CODE END WHILE */
@@ -254,31 +254,14 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-void task_read_buttons(void) {
-    getKeyInput();
-}
-
-// Task: Run FSM
-void task_run_fsm(void) {
-    fsm_setting_run();
-    fsm_automatic_run();
-    fsm_manual_run();
-}
-
-// Task: Update 7-segment display
-void task_update_display(void) {
-    static int led_index = 0;
-    update7SEG(led_index);
-    led_index = (led_index + 1) % 4; // Cycle through the 4 digits
-}
 
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
-    if (htim->Instance == TIM2) {
-    	 HAL_GPIO_TogglePin(LED_RED_GPIO_Port, LED_RED_Pin);
-    	SCH_UpdateDueTime();
-    }
-}
+		SCH_Update();
+		timerRun();
+	//	getKeyInput();
+	//	autoUpdate7Seg();
+	}
 /* USER CODE END 4 */
 
 /**
