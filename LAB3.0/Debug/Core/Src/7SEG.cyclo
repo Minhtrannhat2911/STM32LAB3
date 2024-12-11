@@ -1,0 +1,7 @@
+../Core/Src/7SEG.c:13:6:resetAllDigits	1
+../Core/Src/7SEG.c:20:6:setDigit	5
+../Core/Src/7SEG.c:45:6:setNum2Digit	1
+../Core/Src/7SEG.c:55:6:display7SEG	11
+../Core/Src/7SEG.c:104:6:update7SEG	5
+../Core/Src/7SEG.c:137:6:BufferHorizontal	1
+../Core/Src/7SEG.c:141:6:BufferVertical	1

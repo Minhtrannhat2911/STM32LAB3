@@ -102,6 +102,7 @@ void Error_Handler(void);
 #define BUT3_GPIO_Port GPIOB
 #define BUT4_Pin GPIO_PIN_7
 #define BUT4_GPIO_Port GPIOB
+
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */
@@ -111,5 +112,3 @@ void Error_Handler(void);
 #endif
 
 #endif /* __MAIN_H */
-
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

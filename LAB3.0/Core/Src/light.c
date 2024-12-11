@@ -8,7 +8,7 @@
 #include "main.h"
 int redTime = 5;
 int yellowTime = 2;
-int greenTime = 5;
+int greenTime = 3;
 
 
 
@@ -48,19 +48,18 @@ void Red_Yellow() {
 void timeredupdate() {
 	if (redTime < 99) {
 		redTime++;
-		greenTime++;
 	}
 }
 void timegreenupdate() {
 	if (redTime < 99) {
 		greenTime++;
-		redTime++;
+
 	}
 }
 void timeyellowupdate() {
-	if (redTime < 99 && yellowTime < greenTime) {
+	if (yellowTime < 99) {
 		yellowTime++;
-		redTime++;
+
 	}
 }
 

@@ -1,0 +1,15 @@
+../Core/Src/light.c:15:6:Green_Red	1
+../Core/Src/light.c:23:6:Yellow_Red	1
+../Core/Src/light.c:31:6:Red_Green	1
+../Core/Src/light.c:39:6:Red_Yellow	1
+../Core/Src/light.c:48:6:timeredupdate	2
+../Core/Src/light.c:53:6:timegreenupdate	2
+../Core/Src/light.c:59:6:timeyellowupdate	2
+../Core/Src/light.c:66:6:setRedTime	1
+../Core/Src/light.c:69:6:setYellowTime	1
+../Core/Src/light.c:72:6:setGreenTime	1
+../Core/Src/light.c:76:6:clearTrafficLight	1
+../Core/Src/light.c:85:6:blinkRedLed	1
+../Core/Src/light.c:93:6:blinkYellowLed	1
+../Core/Src/light.c:101:6:blinkGreenLed	1
+../Core/Src/light.c:110:6:blinkAllLed	1
