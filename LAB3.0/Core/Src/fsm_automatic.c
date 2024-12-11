@@ -38,7 +38,7 @@ void fsm_automatic_run() {
             countdownX = greenTime - 1;
             countdownY = redTime - 1;
             updateBuffer(countdownX, countdownY);
-            setTimer(0, greenTime * 1250); // Timer 1
+            setTimer(0, greenTime * 1500); // Timer 1
             setTimer(1, 1000);
             break;
         }

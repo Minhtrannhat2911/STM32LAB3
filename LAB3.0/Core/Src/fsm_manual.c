@@ -13,22 +13,6 @@ int redValue = 0;
 int yellowValue = 0;
 int greenValue = 0;
 
-/*
- * fsm_manual.c
- *
- *  Created on: Oct 30, 2024
- *      Author: Dell
- */
-
-#include "fsm_manual.h"
-#include "light.h"
-
-int mode = 0;
-int redValue = 0;
-int yellowValue = 0;
-int greenValue = 0;
-
-
 void updateBufferAndClear(int newMode, int value) {
     mode = newMode;
     BufferHorizontal(mode);

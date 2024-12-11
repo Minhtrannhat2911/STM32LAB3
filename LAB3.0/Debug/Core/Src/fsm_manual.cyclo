@@ -1,0 +1,3 @@
+../Core/Src/fsm_manual.c:16:6:updateBufferAndClear	1
+../Core/Src/fsm_manual.c:23:6:handleButtonPressed	5
+../Core/Src/fsm_manual.c:38:6:fsm_manual_run	11
