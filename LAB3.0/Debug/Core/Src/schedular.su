@@ -1,0 +1,7 @@
+schedular.c:19:6:SCH_Init	16	static
+schedular.c:30:15:SCH_Add_Task	32	static
+schedular.c:54:6:SCH_UpdateDueTime	16	static
+schedular.c:74:6:SCH_Dispatch_Task	16	static
+schedular.c:88:15:SCH_Delete_Task	16	static
+schedular.c:102:6:SCH_Sleep	16	static,ignoring_inline_asm
+schedular.c:117:6:SCH_Report_Status	4	static
