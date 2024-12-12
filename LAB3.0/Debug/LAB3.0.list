@@ -39,13 +39,13 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  17 .debug_line   0000d514  00000000  00000000  00027a99  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    000849e5  00000000  00000000  00034fad  2**0
+ 18 .debug_str    000849e3  00000000  00000000  00034fad  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000043  00000000  00000000  000b9992  2**0
+ 19 .comment      00000043  00000000  00000000  000b9990  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  00002bd4  00000000  00000000  000b99d8  2**2
+ 20 .debug_frame  00002bd4  00000000  00000000  000b99d4  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 21 .debug_line_str 00000067  00000000  00000000  000bc5ac  2**0
+ 21 .debug_line_str 00000067  00000000  00000000  000bc5a8  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -2073,27 +2073,27 @@ int main(void)
  8000eee:	2201      	movs	r2, #1
  8000ef0:	2164      	movs	r1, #100	@ 0x64
  8000ef2:	480e      	ldr	r0, [pc, #56]	@ (8000f2c <main+0x58>)
- 8000ef4:	f000 f974 	bl	80011e0 <SCH_Add_Task>
+ 8000ef4:	f000 f920 	bl	8001138 <SCH_Add_Task>
   SCH_Add_Task(autoUpdate7Seg, 	100, 5);
  8000ef8:	2205      	movs	r2, #5
  8000efa:	2164      	movs	r1, #100	@ 0x64
  8000efc:	480c      	ldr	r0, [pc, #48]	@ (8000f30 <main+0x5c>)
- 8000efe:	f000 f96f 	bl	80011e0 <SCH_Add_Task>
+ 8000efe:	f000 f91b 	bl	8001138 <SCH_Add_Task>
   SCH_Add_Task(fsm_automatic_run, 	100, 1);
  8000f02:	2201      	movs	r2, #1
  8000f04:	2164      	movs	r1, #100	@ 0x64
  8000f06:	480b      	ldr	r0, [pc, #44]	@ (8000f34 <main+0x60>)
- 8000f08:	f000 f96a 	bl	80011e0 <SCH_Add_Task>
+ 8000f08:	f000 f916 	bl	8001138 <SCH_Add_Task>
   SCH_Add_Task(fsm_manual_run, 		100, 1);
  8000f0c:	2201      	movs	r2, #1
  8000f0e:	2164      	movs	r1, #100	@ 0x64
  8000f10:	4809      	ldr	r0, [pc, #36]	@ (8000f38 <main+0x64>)
- 8000f12:	f000 f965 	bl	80011e0 <SCH_Add_Task>
+ 8000f12:	f000 f911 	bl	8001138 <SCH_Add_Task>
   SCH_Add_Task(fsm_setting_run, 	100, 1);
  8000f16:	2201      	movs	r2, #1
  8000f18:	2164      	movs	r1, #100	@ 0x64
  8000f1a:	4808      	ldr	r0, [pc, #32]	@ (8000f3c <main+0x68>)
- 8000f1c:	f000 f960 	bl	80011e0 <SCH_Add_Task>
+ 8000f1c:	f000 f90c 	bl	8001138 <SCH_Add_Task>
   while (1)
   {
     /* USER CODE END WHILE */
@@ -2449,7 +2449,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
  8001118:	af00      	add	r7, sp, #0
  800111a:	6078      	str	r0, [r7, #4]
 		SCH_Update();
- 800111c:	f000 f80c 	bl	8001138 <SCH_Update>
+ 800111c:	f000 f84c 	bl	80011b8 <SCH_Update>
 		timerRun();
  8001120:	f000 f92c 	bl	800137c <timerRun>
 	//	getKeyInput();
@@ -2485,199 +2485,200 @@ __STATIC_FORCEINLINE void __disable_irq(void)
  8001134:	bf00      	nop
  8001136:	e7fd      	b.n	8001134 <Error_Handler+0x8>
 
-08001138 <SCH_Update>:
+08001138 <SCH_Add_Task>:
 
 void SCH_Init(void) {
 
 }
 
-void SCH_Update(void) {
+unsigned char SCH_Add_Task(void (*pFunction)(), unsigned int DELAY, unsigned int PERIOD){
  8001138:	b480      	push	{r7}
- 800113a:	b083      	sub	sp, #12
+ 800113a:	b087      	sub	sp, #28
  800113c:	af00      	add	r7, sp, #0
+ 800113e:	60f8      	str	r0, [r7, #12]
+ 8001140:	60b9      	str	r1, [r7, #8]
+ 8001142:	607a      	str	r2, [r7, #4]
+	uint32_t Index = 0;
+ 8001144:	2300      	movs	r3, #0
+ 8001146:	617b      	str	r3, [r7, #20]
+	// Find empty slot in the array
+	while ((SCH_tasks[Index].pTask != 0) && (Index < SCH_MAX_TASKS))
+ 8001148:	e002      	b.n	8001150 <SCH_Add_Task+0x18>
+	{
+		Index++;
+ 800114a:	697b      	ldr	r3, [r7, #20]
+ 800114c:	3301      	adds	r3, #1
+ 800114e:	617b      	str	r3, [r7, #20]
+	while ((SCH_tasks[Index].pTask != 0) && (Index < SCH_MAX_TASKS))
+ 8001150:	4a18      	ldr	r2, [pc, #96]	@ (80011b4 <SCH_Add_Task+0x7c>)
+ 8001152:	697b      	ldr	r3, [r7, #20]
+ 8001154:	011b      	lsls	r3, r3, #4
+ 8001156:	4413      	add	r3, r2
+ 8001158:	681b      	ldr	r3, [r3, #0]
+ 800115a:	2b00      	cmp	r3, #0
+ 800115c:	d002      	beq.n	8001164 <SCH_Add_Task+0x2c>
+ 800115e:	697b      	ldr	r3, [r7, #20]
+ 8001160:	2b27      	cmp	r3, #39	@ 0x27
+ 8001162:	d9f2      	bls.n	800114a <SCH_Add_Task+0x12>
+	}
+	if (Index == SCH_MAX_TASKS) {
+ 8001164:	697b      	ldr	r3, [r7, #20]
+ 8001166:	2b28      	cmp	r3, #40	@ 0x28
+ 8001168:	d101      	bne.n	800116e <SCH_Add_Task+0x36>
+		return SCH_MAX_TASKS; // Also return an error code
+ 800116a:	2328      	movs	r3, #40	@ 0x28
+ 800116c:	e01c      	b.n	80011a8 <SCH_Add_Task+0x70>
+	}
+	// initialize new task
+	SCH_tasks[Index].pTask = pFunction;
+ 800116e:	4a11      	ldr	r2, [pc, #68]	@ (80011b4 <SCH_Add_Task+0x7c>)
+ 8001170:	697b      	ldr	r3, [r7, #20]
+ 8001172:	011b      	lsls	r3, r3, #4
+ 8001174:	4413      	add	r3, r2
+ 8001176:	68fa      	ldr	r2, [r7, #12]
+ 8001178:	601a      	str	r2, [r3, #0]
+	SCH_tasks[Index].Delay = DELAY;
+ 800117a:	4a0e      	ldr	r2, [pc, #56]	@ (80011b4 <SCH_Add_Task+0x7c>)
+ 800117c:	697b      	ldr	r3, [r7, #20]
+ 800117e:	011b      	lsls	r3, r3, #4
+ 8001180:	4413      	add	r3, r2
+ 8001182:	3304      	adds	r3, #4
+ 8001184:	68ba      	ldr	r2, [r7, #8]
+ 8001186:	601a      	str	r2, [r3, #0]
+	SCH_tasks[Index].Period = PERIOD;
+ 8001188:	4a0a      	ldr	r2, [pc, #40]	@ (80011b4 <SCH_Add_Task+0x7c>)
+ 800118a:	697b      	ldr	r3, [r7, #20]
+ 800118c:	011b      	lsls	r3, r3, #4
+ 800118e:	4413      	add	r3, r2
+ 8001190:	3308      	adds	r3, #8
+ 8001192:	687a      	ldr	r2, [r7, #4]
+ 8001194:	601a      	str	r2, [r3, #0]
+	SCH_tasks[Index].RunMe = 0;
+ 8001196:	4a07      	ldr	r2, [pc, #28]	@ (80011b4 <SCH_Add_Task+0x7c>)
+ 8001198:	697b      	ldr	r3, [r7, #20]
+ 800119a:	011b      	lsls	r3, r3, #4
+ 800119c:	4413      	add	r3, r2
+ 800119e:	330c      	adds	r3, #12
+ 80011a0:	2200      	movs	r2, #0
+ 80011a2:	701a      	strb	r2, [r3, #0]
+	return Index; // return position of task (to allow later deletion)
+ 80011a4:	697b      	ldr	r3, [r7, #20]
+ 80011a6:	b2db      	uxtb	r3, r3
+}
+ 80011a8:	4618      	mov	r0, r3
+ 80011aa:	371c      	adds	r7, #28
+ 80011ac:	46bd      	mov	sp, r7
+ 80011ae:	bc80      	pop	{r7}
+ 80011b0:	4770      	bx	lr
+ 80011b2:	bf00      	nop
+ 80011b4:	200001c8 	.word	0x200001c8
+
+080011b8 <SCH_Update>:
+
+void SCH_Update(void) {
+ 80011b8:	b480      	push	{r7}
+ 80011ba:	b083      	sub	sp, #12
+ 80011bc:	af00      	add	r7, sp, #0
 	uint32_t Index;
 	for (Index = 0; Index < SCH_MAX_TASKS; Index++) {
- 800113e:	2300      	movs	r3, #0
- 8001140:	607b      	str	r3, [r7, #4]
- 8001142:	e042      	b.n	80011ca <SCH_Update+0x92>
-		if (SCH_tasks_G[Index].pTask) {
- 8001144:	4a25      	ldr	r2, [pc, #148]	@ (80011dc <SCH_Update+0xa4>)
- 8001146:	687b      	ldr	r3, [r7, #4]
- 8001148:	011b      	lsls	r3, r3, #4
- 800114a:	4413      	add	r3, r2
- 800114c:	681b      	ldr	r3, [r3, #0]
- 800114e:	2b00      	cmp	r3, #0
- 8001150:	d038      	beq.n	80011c4 <SCH_Update+0x8c>
-			if (SCH_tasks_G[Index].Delay == 0) {
- 8001152:	4a22      	ldr	r2, [pc, #136]	@ (80011dc <SCH_Update+0xa4>)
- 8001154:	687b      	ldr	r3, [r7, #4]
- 8001156:	011b      	lsls	r3, r3, #4
- 8001158:	4413      	add	r3, r2
- 800115a:	3304      	adds	r3, #4
- 800115c:	681b      	ldr	r3, [r3, #0]
- 800115e:	2b00      	cmp	r3, #0
- 8001160:	d123      	bne.n	80011aa <SCH_Update+0x72>
-				// The task is due to run
-				SCH_tasks_G[Index].RunMe += 1; // Inc. the 'RunMe' flag
- 8001162:	4a1e      	ldr	r2, [pc, #120]	@ (80011dc <SCH_Update+0xa4>)
- 8001164:	687b      	ldr	r3, [r7, #4]
- 8001166:	011b      	lsls	r3, r3, #4
- 8001168:	4413      	add	r3, r2
- 800116a:	330c      	adds	r3, #12
- 800116c:	781b      	ldrb	r3, [r3, #0]
- 800116e:	3301      	adds	r3, #1
- 8001170:	b2d9      	uxtb	r1, r3
- 8001172:	4a1a      	ldr	r2, [pc, #104]	@ (80011dc <SCH_Update+0xa4>)
- 8001174:	687b      	ldr	r3, [r7, #4]
- 8001176:	011b      	lsls	r3, r3, #4
- 8001178:	4413      	add	r3, r2
- 800117a:	330c      	adds	r3, #12
- 800117c:	460a      	mov	r2, r1
- 800117e:	701a      	strb	r2, [r3, #0]
-				if (SCH_tasks_G[Index].Period) {
- 8001180:	4a16      	ldr	r2, [pc, #88]	@ (80011dc <SCH_Update+0xa4>)
- 8001182:	687b      	ldr	r3, [r7, #4]
- 8001184:	011b      	lsls	r3, r3, #4
- 8001186:	4413      	add	r3, r2
- 8001188:	3308      	adds	r3, #8
- 800118a:	681b      	ldr	r3, [r3, #0]
- 800118c:	2b00      	cmp	r3, #0
- 800118e:	d019      	beq.n	80011c4 <SCH_Update+0x8c>
+ 80011be:	2300      	movs	r3, #0
+ 80011c0:	607b      	str	r3, [r7, #4]
+ 80011c2:	e042      	b.n	800124a <SCH_Update+0x92>
+		// If there is a task at this location
+		if (SCH_tasks[Index].pTask) {
+ 80011c4:	4a25      	ldr	r2, [pc, #148]	@ (800125c <SCH_Update+0xa4>)
+ 80011c6:	687b      	ldr	r3, [r7, #4]
+ 80011c8:	011b      	lsls	r3, r3, #4
+ 80011ca:	4413      	add	r3, r2
+ 80011cc:	681b      	ldr	r3, [r3, #0]
+ 80011ce:	2b00      	cmp	r3, #0
+ 80011d0:	d038      	beq.n	8001244 <SCH_Update+0x8c>
+			if (SCH_tasks[Index].Delay == 0) {
+ 80011d2:	4a22      	ldr	r2, [pc, #136]	@ (800125c <SCH_Update+0xa4>)
+ 80011d4:	687b      	ldr	r3, [r7, #4]
+ 80011d6:	011b      	lsls	r3, r3, #4
+ 80011d8:	4413      	add	r3, r2
+ 80011da:	3304      	adds	r3, #4
+ 80011dc:	681b      	ldr	r3, [r3, #0]
+ 80011de:	2b00      	cmp	r3, #0
+ 80011e0:	d123      	bne.n	800122a <SCH_Update+0x72>
+				// And if the task is due to run
+				SCH_tasks[Index].RunMe += 1;
+ 80011e2:	4a1e      	ldr	r2, [pc, #120]	@ (800125c <SCH_Update+0xa4>)
+ 80011e4:	687b      	ldr	r3, [r7, #4]
+ 80011e6:	011b      	lsls	r3, r3, #4
+ 80011e8:	4413      	add	r3, r2
+ 80011ea:	330c      	adds	r3, #12
+ 80011ec:	781b      	ldrb	r3, [r3, #0]
+ 80011ee:	3301      	adds	r3, #1
+ 80011f0:	b2d9      	uxtb	r1, r3
+ 80011f2:	4a1a      	ldr	r2, [pc, #104]	@ (800125c <SCH_Update+0xa4>)
+ 80011f4:	687b      	ldr	r3, [r7, #4]
+ 80011f6:	011b      	lsls	r3, r3, #4
+ 80011f8:	4413      	add	r3, r2
+ 80011fa:	330c      	adds	r3, #12
+ 80011fc:	460a      	mov	r2, r1
+ 80011fe:	701a      	strb	r2, [r3, #0]
+				if (SCH_tasks[Index].Period) {
+ 8001200:	4a16      	ldr	r2, [pc, #88]	@ (800125c <SCH_Update+0xa4>)
+ 8001202:	687b      	ldr	r3, [r7, #4]
+ 8001204:	011b      	lsls	r3, r3, #4
+ 8001206:	4413      	add	r3, r2
+ 8001208:	3308      	adds	r3, #8
+ 800120a:	681b      	ldr	r3, [r3, #0]
+ 800120c:	2b00      	cmp	r3, #0
+ 800120e:	d019      	beq.n	8001244 <SCH_Update+0x8c>
 					// Schedule periodic tasks to run again
-					SCH_tasks_G[Index].Delay = SCH_tasks_G[Index].Period;
- 8001190:	4a12      	ldr	r2, [pc, #72]	@ (80011dc <SCH_Update+0xa4>)
- 8001192:	687b      	ldr	r3, [r7, #4]
- 8001194:	011b      	lsls	r3, r3, #4
- 8001196:	4413      	add	r3, r2
- 8001198:	3308      	adds	r3, #8
- 800119a:	681a      	ldr	r2, [r3, #0]
- 800119c:	490f      	ldr	r1, [pc, #60]	@ (80011dc <SCH_Update+0xa4>)
- 800119e:	687b      	ldr	r3, [r7, #4]
- 80011a0:	011b      	lsls	r3, r3, #4
- 80011a2:	440b      	add	r3, r1
- 80011a4:	3304      	adds	r3, #4
- 80011a6:	601a      	str	r2, [r3, #0]
- 80011a8:	e00c      	b.n	80011c4 <SCH_Update+0x8c>
+					SCH_tasks[Index].Delay = SCH_tasks[Index].Period;
+ 8001210:	4a12      	ldr	r2, [pc, #72]	@ (800125c <SCH_Update+0xa4>)
+ 8001212:	687b      	ldr	r3, [r7, #4]
+ 8001214:	011b      	lsls	r3, r3, #4
+ 8001216:	4413      	add	r3, r2
+ 8001218:	3308      	adds	r3, #8
+ 800121a:	681a      	ldr	r2, [r3, #0]
+ 800121c:	490f      	ldr	r1, [pc, #60]	@ (800125c <SCH_Update+0xa4>)
+ 800121e:	687b      	ldr	r3, [r7, #4]
+ 8001220:	011b      	lsls	r3, r3, #4
+ 8001222:	440b      	add	r3, r1
+ 8001224:	3304      	adds	r3, #4
+ 8001226:	601a      	str	r2, [r3, #0]
+ 8001228:	e00c      	b.n	8001244 <SCH_Update+0x8c>
 				}
 			}
 			else
 			{
-				// Not yet ready to run: just decrement the delay
-				SCH_tasks_G[Index].Delay -= 1;
- 80011aa:	4a0c      	ldr	r2, [pc, #48]	@ (80011dc <SCH_Update+0xa4>)
- 80011ac:	687b      	ldr	r3, [r7, #4]
- 80011ae:	011b      	lsls	r3, r3, #4
- 80011b0:	4413      	add	r3, r2
- 80011b2:	3304      	adds	r3, #4
- 80011b4:	681b      	ldr	r3, [r3, #0]
- 80011b6:	1e5a      	subs	r2, r3, #1
- 80011b8:	4908      	ldr	r1, [pc, #32]	@ (80011dc <SCH_Update+0xa4>)
- 80011ba:	687b      	ldr	r3, [r7, #4]
- 80011bc:	011b      	lsls	r3, r3, #4
- 80011be:	440b      	add	r3, r1
- 80011c0:	3304      	adds	r3, #4
- 80011c2:	601a      	str	r2, [r3, #0]
+				// Else the task is not due to run => Delay--
+				SCH_tasks[Index].Delay -= 1;
+ 800122a:	4a0c      	ldr	r2, [pc, #48]	@ (800125c <SCH_Update+0xa4>)
+ 800122c:	687b      	ldr	r3, [r7, #4]
+ 800122e:	011b      	lsls	r3, r3, #4
+ 8001230:	4413      	add	r3, r2
+ 8001232:	3304      	adds	r3, #4
+ 8001234:	681b      	ldr	r3, [r3, #0]
+ 8001236:	1e5a      	subs	r2, r3, #1
+ 8001238:	4908      	ldr	r1, [pc, #32]	@ (800125c <SCH_Update+0xa4>)
+ 800123a:	687b      	ldr	r3, [r7, #4]
+ 800123c:	011b      	lsls	r3, r3, #4
+ 800123e:	440b      	add	r3, r1
+ 8001240:	3304      	adds	r3, #4
+ 8001242:	601a      	str	r2, [r3, #0]
 	for (Index = 0; Index < SCH_MAX_TASKS; Index++) {
- 80011c4:	687b      	ldr	r3, [r7, #4]
- 80011c6:	3301      	adds	r3, #1
- 80011c8:	607b      	str	r3, [r7, #4]
- 80011ca:	687b      	ldr	r3, [r7, #4]
- 80011cc:	2b27      	cmp	r3, #39	@ 0x27
- 80011ce:	d9b9      	bls.n	8001144 <SCH_Update+0xc>
+ 8001244:	687b      	ldr	r3, [r7, #4]
+ 8001246:	3301      	adds	r3, #1
+ 8001248:	607b      	str	r3, [r7, #4]
+ 800124a:	687b      	ldr	r3, [r7, #4]
+ 800124c:	2b27      	cmp	r3, #39	@ 0x27
+ 800124e:	d9b9      	bls.n	80011c4 <SCH_Update+0xc>
 			}
 		}
 	}
 }
- 80011d0:	bf00      	nop
- 80011d2:	bf00      	nop
- 80011d4:	370c      	adds	r7, #12
- 80011d6:	46bd      	mov	sp, r7
- 80011d8:	bc80      	pop	{r7}
- 80011da:	4770      	bx	lr
- 80011dc:	200001c8 	.word	0x200001c8
-
-080011e0 <SCH_Add_Task>:
-
-unsigned char SCH_Add_Task(void (*pFunction)(), unsigned int DELAY, unsigned int PERIOD){
- 80011e0:	b480      	push	{r7}
- 80011e2:	b087      	sub	sp, #28
- 80011e4:	af00      	add	r7, sp, #0
- 80011e6:	60f8      	str	r0, [r7, #12]
- 80011e8:	60b9      	str	r1, [r7, #8]
- 80011ea:	607a      	str	r2, [r7, #4]
-	uint32_t Index = 0;
- 80011ec:	2300      	movs	r3, #0
- 80011ee:	617b      	str	r3, [r7, #20]
-	// First find a gap in the array (if there is one)
-	while ((SCH_tasks_G[Index].pTask != 0) && (Index < SCH_MAX_TASKS))
- 80011f0:	e002      	b.n	80011f8 <SCH_Add_Task+0x18>
-	{
-		Index++;
- 80011f2:	697b      	ldr	r3, [r7, #20]
- 80011f4:	3301      	adds	r3, #1
- 80011f6:	617b      	str	r3, [r7, #20]
-	while ((SCH_tasks_G[Index].pTask != 0) && (Index < SCH_MAX_TASKS))
- 80011f8:	4a18      	ldr	r2, [pc, #96]	@ (800125c <SCH_Add_Task+0x7c>)
- 80011fa:	697b      	ldr	r3, [r7, #20]
- 80011fc:	011b      	lsls	r3, r3, #4
- 80011fe:	4413      	add	r3, r2
- 8001200:	681b      	ldr	r3, [r3, #0]
- 8001202:	2b00      	cmp	r3, #0
- 8001204:	d002      	beq.n	800120c <SCH_Add_Task+0x2c>
- 8001206:	697b      	ldr	r3, [r7, #20]
- 8001208:	2b27      	cmp	r3, #39	@ 0x27
- 800120a:	d9f2      	bls.n	80011f2 <SCH_Add_Task+0x12>
-	}
-	if (Index == SCH_MAX_TASKS) {
- 800120c:	697b      	ldr	r3, [r7, #20]
- 800120e:	2b28      	cmp	r3, #40	@ 0x28
- 8001210:	d101      	bne.n	8001216 <SCH_Add_Task+0x36>
-		return SCH_MAX_TASKS; // Also return an error code
- 8001212:	2328      	movs	r3, #40	@ 0x28
- 8001214:	e01c      	b.n	8001250 <SCH_Add_Task+0x70>
-	}
-	// If we're here, there is a space in the task array
-	SCH_tasks_G[Index].pTask = pFunction;
- 8001216:	4a11      	ldr	r2, [pc, #68]	@ (800125c <SCH_Add_Task+0x7c>)
- 8001218:	697b      	ldr	r3, [r7, #20]
- 800121a:	011b      	lsls	r3, r3, #4
- 800121c:	4413      	add	r3, r2
- 800121e:	68fa      	ldr	r2, [r7, #12]
- 8001220:	601a      	str	r2, [r3, #0]
-	SCH_tasks_G[Index].Delay = DELAY;
- 8001222:	4a0e      	ldr	r2, [pc, #56]	@ (800125c <SCH_Add_Task+0x7c>)
- 8001224:	697b      	ldr	r3, [r7, #20]
- 8001226:	011b      	lsls	r3, r3, #4
- 8001228:	4413      	add	r3, r2
- 800122a:	3304      	adds	r3, #4
- 800122c:	68ba      	ldr	r2, [r7, #8]
- 800122e:	601a      	str	r2, [r3, #0]
-	SCH_tasks_G[Index].Period = PERIOD;
- 8001230:	4a0a      	ldr	r2, [pc, #40]	@ (800125c <SCH_Add_Task+0x7c>)
- 8001232:	697b      	ldr	r3, [r7, #20]
- 8001234:	011b      	lsls	r3, r3, #4
- 8001236:	4413      	add	r3, r2
- 8001238:	3308      	adds	r3, #8
- 800123a:	687a      	ldr	r2, [r7, #4]
- 800123c:	601a      	str	r2, [r3, #0]
-	SCH_tasks_G[Index].RunMe = 0;
- 800123e:	4a07      	ldr	r2, [pc, #28]	@ (800125c <SCH_Add_Task+0x7c>)
- 8001240:	697b      	ldr	r3, [r7, #20]
- 8001242:	011b      	lsls	r3, r3, #4
- 8001244:	4413      	add	r3, r2
- 8001246:	330c      	adds	r3, #12
- 8001248:	2200      	movs	r2, #0
- 800124a:	701a      	strb	r2, [r3, #0]
-	return Index; // return position of task (to allow later deletion)
- 800124c:	697b      	ldr	r3, [r7, #20]
- 800124e:	b2db      	uxtb	r3, r3
-}
- 8001250:	4618      	mov	r0, r3
- 8001252:	371c      	adds	r7, #28
- 8001254:	46bd      	mov	sp, r7
- 8001256:	bc80      	pop	{r7}
- 8001258:	4770      	bx	lr
- 800125a:	bf00      	nop
+ 8001250:	bf00      	nop
+ 8001252:	bf00      	nop
+ 8001254:	370c      	adds	r7, #12
+ 8001256:	46bd      	mov	sp, r7
+ 8001258:	bc80      	pop	{r7}
+ 800125a:	4770      	bx	lr
  800125c:	200001c8 	.word	0x200001c8
 
 08001260 <SCH_Dispatch_Task>:
@@ -2687,12 +2688,12 @@ void SCH_Dispatch_Task(void) {
  8001262:	b082      	sub	sp, #8
  8001264:	af00      	add	r7, sp, #0
 	uint32_t Index;
-	// Dispatches (runs) the next task (if one is ready)
+	// runs the next task
 	for (Index = 0; Index < SCH_MAX_TASKS; Index++) {
  8001266:	2300      	movs	r3, #0
  8001268:	607b      	str	r3, [r7, #4]
  800126a:	e02a      	b.n	80012c2 <SCH_Dispatch_Task+0x62>
-		if (SCH_tasks_G[Index].RunMe > 0) {
+		if (SCH_tasks[Index].RunMe > 0) {
  800126c:	4a19      	ldr	r2, [pc, #100]	@ (80012d4 <SCH_Dispatch_Task+0x74>)
  800126e:	687b      	ldr	r3, [r7, #4]
  8001270:	011b      	lsls	r3, r3, #4
@@ -2701,14 +2702,14 @@ void SCH_Dispatch_Task(void) {
  8001276:	781b      	ldrb	r3, [r3, #0]
  8001278:	2b00      	cmp	r3, #0
  800127a:	d01f      	beq.n	80012bc <SCH_Dispatch_Task+0x5c>
-			(*SCH_tasks_G[Index].pTask)(); // Run the task
+			(*SCH_tasks[Index].pTask)(); // Run the task
  800127c:	4a15      	ldr	r2, [pc, #84]	@ (80012d4 <SCH_Dispatch_Task+0x74>)
  800127e:	687b      	ldr	r3, [r7, #4]
  8001280:	011b      	lsls	r3, r3, #4
  8001282:	4413      	add	r3, r2
  8001284:	681b      	ldr	r3, [r3, #0]
  8001286:	4798      	blx	r3
-			SCH_tasks_G[Index].RunMe -= 1; // Reset / reduce RunMe flag
+			SCH_tasks[Index].RunMe -= 1; // Reset the flag
  8001288:	4a12      	ldr	r2, [pc, #72]	@ (80012d4 <SCH_Dispatch_Task+0x74>)
  800128a:	687b      	ldr	r3, [r7, #4]
  800128c:	011b      	lsls	r3, r3, #4
@@ -2724,7 +2725,7 @@ void SCH_Dispatch_Task(void) {
  80012a0:	330c      	adds	r3, #12
  80012a2:	460a      	mov	r2, r1
  80012a4:	701a      	strb	r2, [r3, #0]
-			if (SCH_tasks_G[Index].Period == 0) {
+			if (SCH_tasks[Index].Period == 0) {
  80012a6:	4a0b      	ldr	r2, [pc, #44]	@ (80012d4 <SCH_Dispatch_Task+0x74>)
  80012a8:	687b      	ldr	r3, [r7, #4]
  80012aa:	011b      	lsls	r3, r3, #4
@@ -2762,7 +2763,7 @@ unsigned char SCH_Delete_Task(const uint32_t TASK_INDEX) {
  80012dc:	af00      	add	r7, sp, #0
  80012de:	6078      	str	r0, [r7, #4]
 	int Return_code;
-	if (SCH_tasks_G[TASK_INDEX].pTask == 0) {
+	if (SCH_tasks[TASK_INDEX].pTask == 0) {
  80012e0:	4a16      	ldr	r2, [pc, #88]	@ (800133c <SCH_Delete_Task+0x64>)
  80012e2:	687b      	ldr	r3, [r7, #4]
  80012e4:	011b      	lsls	r3, r3, #4
@@ -2780,14 +2781,14 @@ unsigned char SCH_Delete_Task(const uint32_t TASK_INDEX) {
  80012f4:	2300      	movs	r3, #0
  80012f6:	60fb      	str	r3, [r7, #12]
 	}
-	SCH_tasks_G[TASK_INDEX].pTask = 0x0000;
+	SCH_tasks[TASK_INDEX].pTask = 0x0000;
  80012f8:	4a10      	ldr	r2, [pc, #64]	@ (800133c <SCH_Delete_Task+0x64>)
  80012fa:	687b      	ldr	r3, [r7, #4]
  80012fc:	011b      	lsls	r3, r3, #4
  80012fe:	4413      	add	r3, r2
  8001300:	2200      	movs	r2, #0
  8001302:	601a      	str	r2, [r3, #0]
-	SCH_tasks_G[TASK_INDEX].Delay = 0;
+	SCH_tasks[TASK_INDEX].Delay = 0;
  8001304:	4a0d      	ldr	r2, [pc, #52]	@ (800133c <SCH_Delete_Task+0x64>)
  8001306:	687b      	ldr	r3, [r7, #4]
  8001308:	011b      	lsls	r3, r3, #4
@@ -2795,7 +2796,7 @@ unsigned char SCH_Delete_Task(const uint32_t TASK_INDEX) {
  800130c:	3304      	adds	r3, #4
  800130e:	2200      	movs	r2, #0
  8001310:	601a      	str	r2, [r3, #0]
-	SCH_tasks_G[TASK_INDEX].Period = 0;
+	SCH_tasks[TASK_INDEX].Period = 0;
  8001312:	4a0a      	ldr	r2, [pc, #40]	@ (800133c <SCH_Delete_Task+0x64>)
  8001314:	687b      	ldr	r3, [r7, #4]
  8001316:	011b      	lsls	r3, r3, #4
@@ -2803,7 +2804,7 @@ unsigned char SCH_Delete_Task(const uint32_t TASK_INDEX) {
  800131a:	3308      	adds	r3, #8
  800131c:	2200      	movs	r2, #0
  800131e:	601a      	str	r2, [r3, #0]
-	SCH_tasks_G[TASK_INDEX].RunMe = 0;
+	SCH_tasks[TASK_INDEX].RunMe = 0;
  8001320:	4a06      	ldr	r2, [pc, #24]	@ (800133c <SCH_Delete_Task+0x64>)
  8001322:	687b      	ldr	r3, [r7, #4]
  8001324:	011b      	lsls	r3, r3, #4

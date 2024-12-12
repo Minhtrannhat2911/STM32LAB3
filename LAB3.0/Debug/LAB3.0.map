@@ -3228,12 +3228,12 @@ LOAD C:/Users/Dell/Desktop/New folder/Vi xu ly/STM32CubeIDE_1.7.0/STM32CubeIDE/p
  .text.Error_Handler
                 0x0800112c        0xc ./Core/Src/main.o
                 0x0800112c                Error_Handler
- .text.SCH_Update
-                0x08001138       0xa8 ./Core/Src/schedular.o
-                0x08001138                SCH_Update
  .text.SCH_Add_Task
-                0x080011e0       0x80 ./Core/Src/schedular.o
-                0x080011e0                SCH_Add_Task
+                0x08001138       0x80 ./Core/Src/schedular.o
+                0x08001138                SCH_Add_Task
+ .text.SCH_Update
+                0x080011b8       0xa8 ./Core/Src/schedular.o
+                0x080011b8                SCH_Update
  .text.SCH_Dispatch_Task
                 0x08001260       0x78 ./Core/Src/schedular.o
                 0x08001260                SCH_Dispatch_Task
@@ -3605,9 +3605,9 @@ LOAD C:/Users/Dell/Desktop/New folder/Vi xu ly/STM32CubeIDE_1.7.0/STM32CubeIDE/p
                 0x2000017c                greenValue
  .bss.htim2     0x20000180       0x48 ./Core/Src/main.o
                 0x20000180                htim2
- .bss.SCH_tasks_G
+ .bss.SCH_tasks
                 0x200001c8      0x280 ./Core/Src/schedular.o
-                0x200001c8                SCH_tasks_G
+                0x200001c8                SCH_tasks
  .bss.timer_flag
                 0x20000448       0x28 ./Core/Src/software_timer.o
                 0x20000448                timer_flag
@@ -3920,7 +3920,7 @@ LOAD C:/Users/Dell/Desktop/New folder/Vi xu ly/STM32CubeIDE_1.7.0/STM32CubeIDE/p
  .debug_line    0x00008801     0x3468 ./Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_tim.o
  .debug_line    0x0000bc69     0x18ab ./Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_tim_ex.o
 
-.debug_str      0x00000000    0x849e5
+.debug_str      0x00000000    0x849e3
  .debug_str     0x00000000    0x7f8d4 ./Core/Src/7SEG.o
                               0x7fc19 (size before relaxing)
  .debug_str     0x0007f8d4       0xd0 ./Core/Src/button.o
@@ -3935,29 +3935,29 @@ LOAD C:/Users/Dell/Desktop/New folder/Vi xu ly/STM32CubeIDE_1.7.0/STM32CubeIDE/p
                               0x7fb8c (size before relaxing)
  .debug_str     0x0007fc2c     0x2ac4 ./Core/Src/main.o
                               0x82780 (size before relaxing)
- .debug_str     0x000826f0       0x80 ./Core/Src/schedular.o
-                              0x81dbf (size before relaxing)
- .debug_str     0x00082770       0x37 ./Core/Src/software_timer.o
+ .debug_str     0x000826f0       0x7e ./Core/Src/schedular.o
+                              0x81dbd (size before relaxing)
+ .debug_str     0x0008276e       0x37 ./Core/Src/software_timer.o
                                0x2e29 (size before relaxing)
- .debug_str     0x000827a7      0x300 ./Core/Src/stm32f1xx_hal_msp.o
+ .debug_str     0x000827a5      0x300 ./Core/Src/stm32f1xx_hal_msp.o
                               0x80258 (size before relaxing)
- .debug_str     0x00082aa7       0xec ./Core/Src/stm32f1xx_it.o
+ .debug_str     0x00082aa5       0xec ./Core/Src/stm32f1xx_it.o
                               0x7ff93 (size before relaxing)
- .debug_str     0x00082b93       0x7e ./Core/Src/system_stm32f1xx.o
+ .debug_str     0x00082b91       0x7e ./Core/Src/system_stm32f1xx.o
                               0x7f747 (size before relaxing)
- .debug_str     0x00082c11       0x44 ./Core/Startup/startup_stm32f103c6ux.o
+ .debug_str     0x00082c0f       0x44 ./Core/Startup/startup_stm32f103c6ux.o
                                  0x83 (size before relaxing)
- .debug_str     0x00082c55      0x38e ./Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.o
+ .debug_str     0x00082c53      0x38e ./Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.o
                               0x7fe40 (size before relaxing)
- .debug_str     0x00082fe3      0x294 ./Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.o
+ .debug_str     0x00082fe1      0x294 ./Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.o
                               0x7fd8c (size before relaxing)
- .debug_str     0x00083277      0x2d2 ./Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.o
+ .debug_str     0x00083275      0x2d2 ./Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.o
                               0x7facd (size before relaxing)
- .debug_str     0x00083549      0x229 ./Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.o
+ .debug_str     0x00083547      0x229 ./Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.o
                               0x7fb76 (size before relaxing)
- .debug_str     0x00083772      0xde0 ./Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_tim.o
+ .debug_str     0x00083770      0xde0 ./Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_tim.o
                               0x80b78 (size before relaxing)
- .debug_str     0x00084552      0x493 ./Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_tim_ex.o
+ .debug_str     0x00084550      0x493 ./Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_tim_ex.o
                               0x80384 (size before relaxing)
 
 .comment        0x00000000       0x43

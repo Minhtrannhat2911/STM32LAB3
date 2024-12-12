@@ -20,7 +20,7 @@ typedef struct{
 
 #define SCH_MAX_TASKS 40
 #define NO_TASK_ID 0
-extern sTask SCH_tasks_G[SCH_MAX_TASKS];
+extern sTask SCH_tasks[SCH_MAX_TASKS];
 
 void SCH_Init(void);
 void SCH_Update(void);
