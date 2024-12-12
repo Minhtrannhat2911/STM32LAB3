@@ -16,8 +16,8 @@
 
 #define MODE_BUTTON 	0
 #define ADD_BUTTON		1
-#define RESET_BUTTON	2
-#define CONFIRM_BUTTON	3
+#define CONFIRM_BUTTON	2
+#define RESET_BUTTON	3
 
 extern int KeyReg0[NUM_BUTTONS];
 extern int KeyReg1[NUM_BUTTONS];

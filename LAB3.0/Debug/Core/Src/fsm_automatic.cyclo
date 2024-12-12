@@ -1,4 +1,4 @@
 ../Core/Src/fsm_automatic.c:14:6:updateBuffer	1
 ../Core/Src/fsm_automatic.c:20:6:updateCountdownAndResetTimer	1
-../Core/Src/fsm_automatic.c:28:6:switchToManualMode	1
-../Core/Src/fsm_automatic.c:34:6:fsm_automatic_run	18
+../Core/Src/fsm_automatic.c:27:6:switchToManualMode	1
+../Core/Src/fsm_automatic.c:33:6:fsm_automatic_run	18

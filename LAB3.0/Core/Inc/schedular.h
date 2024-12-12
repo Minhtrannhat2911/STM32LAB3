@@ -8,7 +8,6 @@
 #ifndef INC_SCHEDULAR_H_
 #define INC_SCHEDULAR_H_
 
-#include "sched.h"
 #include "main.h"
 
 typedef struct{

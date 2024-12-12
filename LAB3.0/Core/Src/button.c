@@ -103,10 +103,10 @@ void getKeyInput() {
             case ADD_BUTTON:
                 KeyReg2[i] = HAL_GPIO_ReadPin(BUT2_GPIO_Port, BUT2_Pin);
                 break;
-            case RESET_BUTTON:
+            case CONFIRM_BUTTON:
                 KeyReg2[i] = HAL_GPIO_ReadPin(BUT3_GPIO_Port, BUT3_Pin);
                 break;
-            case CONFIRM_BUTTON:
+            case RESET_BUTTON:
                 KeyReg2[i] = HAL_GPIO_ReadPin(BUT4_GPIO_Port, BUT4_Pin);
                 break;
             default:

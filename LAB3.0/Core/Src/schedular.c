@@ -22,7 +22,7 @@ unsigned char SCH_Add_Task(void (*pFunction)(), unsigned int DELAY, unsigned int
 		Index++;
 	}
 	if (Index == SCH_MAX_TASKS) {
-		return SCH_MAX_TASKS; // Also return an error code
+		return SCH_MAX_TASKS;
 	}
 	// initialize new task
 	SCH_tasks[Index].pTask = pFunction;
@@ -75,7 +75,7 @@ unsigned char SCH_Delete_Task(const uint32_t TASK_INDEX) {
 	else {
 		Return_code = 0;
 	}
-	SCH_tasks[TASK_INDEX].pTask = 0x0000;
+	SCH_tasks[TASK_INDEX].pTask = NULL;
 	SCH_tasks[TASK_INDEX].Delay = 0;
 	SCH_tasks[TASK_INDEX].Period = 0;
 	SCH_tasks[TASK_INDEX].RunMe = 0;

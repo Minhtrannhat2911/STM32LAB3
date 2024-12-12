@@ -18,7 +18,6 @@ void updateBuffer(int x, int y) {
 }
 
 void updateCountdownAndResetTimer() {
-
     updateBuffer(countdownX, countdownY); // Cập nhật lại buffer hiển thị
     countdownX--;
     countdownY--;
