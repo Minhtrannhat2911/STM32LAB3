@@ -66,7 +66,6 @@ void uart_comms_fsm() {
     static float adc_stored_value = 0.0f; // Store the previous ADC value
     static int adc_locked = 0; // Lock flag for ADC value
 
-    char str[50] = {0};
 
     switch (cmd_flag) {
     case RST:
